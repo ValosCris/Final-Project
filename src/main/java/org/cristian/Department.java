@@ -38,6 +38,10 @@ public class Department {
             return false;
         }
 
+        if (departmentName.equals(" ")) { // don't want just a space, we want a real name
+            return false;
+        }
+
         for (int i = 0; i < departmentName.length(); i++) {
             if (!Character.isLetter(departmentName.charAt(i)) && departmentName.charAt(i) != ' ') {
                 return false;

@@ -64,6 +64,7 @@ public class Address {
         return true; //if it follows the format CDCDCD, where C is character and D is digit
     }
 
+    //no javadoc since it is a setter
     public void setPostalCode(String postalCode) { //method has to be called in setter to see if valid
         if (isPostalCodeValid(postalCode)) {
             this.postalCode = postalCode.toUpperCase();

@@ -76,9 +76,9 @@ public class Course {
      *
      * @return the int array that holds the values of the averages
      */
-    public int[] calcStudentsAverage() {
+    //public int[] calcStudentsAverage() {
 
-    }
+    //}
 
     /**
      * adds a new assignment to the course, always return `true`
