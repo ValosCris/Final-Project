@@ -67,24 +67,9 @@ public class Student {
             return false;
         }
 
-        int studentIdx = course.getRegisteredStudents().indexOf(this); //get index of student position in the course list
+        registeredCourses.remove(course); //remove course from registered course
 
-        registeredCourses.remove(course);
-
-        course.getRegisteredStudents().remove(this);
-
-        if (studentIdx != -1) { //make sure the index is found
-            List<Assignment> allAssignments = course.getAssignments(); //for specific course get its assignments
-
-            for (int i = 0; i < allAssignments.size(); i++) {
-                Assignment currentAssignment = allAssignments.get(i);
-                List<Integer> scoreList = currentAssignment.getScores();
-
-                if (studentIdx < scoreList.size()) {
-                    scoreList.remove(studentIdx); //remove that specific student score
-                }
-            }
-        }
+        course.getRegisteredStudents().remove(this); //get rid of student from registered student
 
         return true;
     }
