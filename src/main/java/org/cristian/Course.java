@@ -44,7 +44,7 @@ public class Course {
             allWeight += assignment.getWeight();
         }
 
-        return Math.abs(allWeight - 100) <= 0.01; //so if its 99.99, 99.99 - 100 = -0.01 but abs makes it 0.01 so it's fine
+        return Math.abs(allWeight - 100) <= 0.1; //so if its 99.9, 99.9 - 100 = -0.1 but abs makes it 0.1 so it's fine
     }
 
     /**
@@ -76,9 +76,37 @@ public class Course {
      *
      * @return the int array that holds the values of the averages
      */
-    //public int[] calcStudentsAverage() {
+    public int[] calcStudentsAverage() {
+        int[] averages = new int[registeredStudents.size()]; //to hold exactly number of registered students averages in array
 
-    //}
+        for (int i = 0; i < registeredStudents.size(); i++) {
+            double total = 0;
+
+            for (Assignment assignment : assignments) { //for assignments
+                List<Integer> scores = assignment.getScores();
+
+                if (i < scores.size()) { //see if student has score for assignment
+                    Integer score = scores.get(i);
+
+                    if (score != null) { //don't want to consider null score
+                        double weightInPercentage = assignment.getWeight();
+                        double weightValueInDecimal = weightInPercentage / 100; //to get in decimal
+                        total += score * weightValueInDecimal; //pondération
+                    }
+                }
+            }
+
+            averages[i] = (int) Math.round(total); //round, like on omnivox 65.5 -> 66
+
+            if (i < finalScores.size()) { //if student already there, modify specifically at the position
+                finalScores.set(i, averages[i]);
+            } else {
+                finalScores.add(averages[i]); //add if student not there
+            }
+        }
+
+        return averages;
+    }
 
     /**
      * adds a new assignment to the course, always return `true`
@@ -104,16 +132,71 @@ public class Course {
      * and calculates the final score for each student.
      */
     public void generateScores() {
+        //each assignment so go through the list
+        for (Assignment assignment : assignments) {
+            assignment.generateRandomScore();
+        }
 
+        calcStudentsAverage(); //final score for students
     }
 
     /**
      * displays the scores of a course in a table,
      * with the assignment averages and student weighted average
      */
-    //Note: (helper methods might be required)
     public void displayScores() {
+        int[] studentAverages = calcStudentsAverage();
 
+        System.out.println("----------------------------------------------------------");
+
+        System.out.println("\nCourse: " + courseName + "(" + courseId + ")"); //e.g.: Course: Programming 1(C-D00-01)
+
+        System.out.print("                    "); //some space for student name assuming not longer than that
+
+        for (Assignment assignment : assignments) {
+
+            System.out.printf("%-18s", assignment.getAssignmentName()); //print assignment name after the spaces put for student name
+        }
+
+        System.out.println("Final Score"); //directly after the assignments name
+
+        for (int stuIdx = 0; stuIdx < registeredStudents.size(); stuIdx++) {
+            Student student = registeredStudents.get(stuIdx);
+
+            String studentName = student.getStudentName(); //get name of student
+
+            System.out.printf("%-20s", studentName); //print its name with formatting
+
+
+            for (Assignment assignment : assignments) {
+                List<Integer> scores = assignment.getScores(); //store the scores for the assignment in list
+
+                if (stuIdx < scores.size()) { //make sure student has a score for assignment
+                    Integer score = scores.get(stuIdx);
+
+                    if (score != null) { //avoid having a null
+                        System.out.printf("%-18d", score);
+                    } else {
+                        System.out.printf("%-18s", "no score"); //in case no score
+                    }
+                }
+            }
+
+            if (stuIdx < studentAverages.length) {
+                System.out.printf("%-18d\n", studentAverages[stuIdx]); //for final score
+            } else {
+                System.out.printf("%-18s\n", "no final score"); //if student is not found
+            }
+        }
+
+        System.out.print("Average             ");
+
+        for (Assignment assignment : assignments) {
+            double avg = assignment.calcAssignmentAvg();
+            System.out.printf("%-18d", Math.round(avg));
+        }
+
+        System.out.println("\n----------------------------------------------------------");
     }
 
     /**

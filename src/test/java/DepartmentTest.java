@@ -7,7 +7,7 @@ public class DepartmentTest {
 
     @Test
     @DisplayName("isDepartmentNameValid: null -> false")
-    public void isDepartmentNameValid1() {
+    public void testIsDepartmentNameValid1() {
         String departmentName = null;
 
         boolean expected = false;
@@ -18,7 +18,7 @@ public class DepartmentTest {
 
     @Test
     @DisplayName("isDepartmentNameValid: empty -> false")
-    public void isDepartmentNameValid2() {
+    public void testIsDepartmentNameValid2() {
         String departmentName = "";
 
         boolean expected = false;
@@ -29,7 +29,7 @@ public class DepartmentTest {
 
     @Test
     @DisplayName("isDepartmentNameValid: a b cd -> true")
-    public void isDepartmentNameValid3() {
+    public void testIsDepartmentNameValid3() {
         String departmentName = "a b cd";
 
         boolean expected = true;
@@ -40,7 +40,7 @@ public class DepartmentTest {
 
     @Test
     @DisplayName("isDepartmentNameValid: Ab Cd1 -> false")
-    public void isDepartmentNameValid4() {
+    public void testIsDepartmentNameValid4() {
         String departmentName = "Ab Cd1";
 
         boolean expected = false;
@@ -51,7 +51,7 @@ public class DepartmentTest {
 
     @Test
     @DisplayName("isDepartmentNameValid: space -> false")
-    public void isDepartmentNameValid5() {
+    public void testIsDepartmentNameValid5() {
         String departmentName = " ";
 
         boolean expected = false;

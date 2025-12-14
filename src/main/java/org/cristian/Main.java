@@ -1,17 +1,24 @@
 package org.cristian;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        Address address = new Address(1234, "Sigma", "Alpha", Address.Province.QC, "A1B2C3");
+        Department department = new Department("Chemistry");
+        Student student1 = new Student("John Pork", Student.Gender.MALE, address, department);
+        Student student2 = new Student("Tim Cheese", Student.Gender.MALE, address, department);
+        Student student3 = new Student("Marge Simpson", Student.Gender.FEMALE, address, department);
+        Course course = new Course("Looksmaxxing", 2.5, department);
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        course.registerStudent(student1);
+        course.registerStudent(student2);
+        course.registerStudent(student3);
+
+        course.addAssignment("Molecules", 35);
+        course.addAssignment("Gaz", 20);
+        course.addAssignment("Solutions", 40);
+        course.addAssignment("Sigma bonds", 5);
+
+        course.generateScores();
+        course.displayScores();
     }
 }
